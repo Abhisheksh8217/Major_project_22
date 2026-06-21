@@ -1,0 +1,73 @@
+exp7//
+
+sudo apt update
+
+sudo apt install ansible -y
+
+ansible --version
+
+mkdir ansible_lab
+
+cd ansible_lab
+
+mkdir library
+
+gedit hosts.ini
+
+gedit library/hello_world.py
+
+gedit today.yml
+
+chmod +x library/hello_world.py
+
+ansible-inventory -i hosts.ini --list
+
+ansible local -i hosts.ini -m ping
+
+ansible-playbook -i hosts.ini today.yml
+
+File:today.yml
+---
+- name: Test Custom Module
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: Say hello
+      hello_world:
+        name: "Ansible"
+      register: result
+
+    - name: Show message
+      debug:
+        msg: "{{ result.message }}"
+
+File:hello_world.py
+#!/usr/bin/python
+
+from ansible.module_utils.basic import AnsibleModule
+
+
+def run_module():
+    module_args = dict(
+        name=dict(type='str', required=True)
+    )
+
+    module = AnsibleModule(
+        argument_spec=module_args
+    )
+
+    result = {
+        "changed": False,
+        "message": f"Hello, {module.params['name']}!"
+    }
+
+    module.exit_json(**result)
+
+
+if __name__ == '__main__':
+    run_module()
+
+File: hosts.ini
+[local]
+localhost ansible_connection=local
