@@ -1,0 +1,25 @@
+Create Maven Project
+↓
+mvn clean package
+↓
+Push to GitHub
+↓
+Create hosts.ini
+↓
+Create mydeploy.yml
+↓
+Create Jenkins Pipeline
+↓
+Build Now
+↓
+Checkout
+↓
+Build
+↓
+Test
+↓
+Archive JAR
+↓
+Deploy JAR using Ansible
+↓
+SUCCESS
